@@ -3,8 +3,8 @@ const path = require("path");
 
 const f = fs.readFileSync(path.join(__dirname, "./input/2.txt")).toString();
 
-const toto = f.split("\n").map((line) => line.split(" "))
-console.log(toto)
+const toto = f.split("\n").map((line) => line.split(" "));
+console.log(toto);
 
 const moves = {
   rock: 1,
@@ -38,12 +38,40 @@ function score(opponentPlay, myPlay) {
 function Part1() {
   const outcomes = toto.map((line) => {
     const opponentPlay = mapInput[line[0]];
-    console.log("opponent play", opponentPlay)
+    console.log("opponent play", opponentPlay);
     const myPlay = mapInput[line[1]];
-    console.log("myPlay", myPlay)
+    console.log("myPlay", myPlay);
     return score(opponentPlay, myPlay);
   });
-  console.log(outcomes.reduce((a, b) => a + b, 0))
+  console.log(outcomes.reduce((a, b) => a + b, 0));
+}
+
+const solution = {
+  A: {
+    X: moves.scissors,
+    Y: moves.rock,
+    Z: moves.paper,
+  },
+  B: {
+    X: moves.rock,
+    Y: moves.paper,
+    Z: moves.scissors,
+  },
+  C: {
+    X: moves.paper,
+    Y: moves.scissors,
+    Z: moves.rock,
+  },
+};
+
+function Part2() {
+  const outcomes = toto.map((line) => {
+    const opponentPlay = mapInput[line[0]];
+    const myPlay = solution[line[0]][line[1]];
+    return score(opponentPlay, myPlay);
+  });
+  console.log(outcomes.reduce((a, b) => a + b, 0));
 }
 
 Part1();
+Part2();
